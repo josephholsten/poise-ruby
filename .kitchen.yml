@@ -1,0 +1,34 @@
+---
+driver_plugin: vagrant
+driver_config:
+  require_chef_omnibus: true
+
+platforms:
+- name: ubuntu-12.04
+  driver_config:
+    box: opscode_ubuntu-12.04_chef-provisionerless
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
+  run_list:
+  - recipe[apt]
+- name: ubuntu-13.10
+  driver_config:
+    box: opscode_ubuntu-13.10_chef-provisionerless
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-13.10_chef-provisionerless.box
+  run_list:
+  - recipe[apt]
+
+suites:
+- name: ruby-18
+  run_list:
+  - recipe[ruby]
+  attributes: {ruby: {version: '1.8'}}
+- name: ruby-19
+  run_list:
+  - recipe[ruby]
+  attributes: {ruby: {version: '1.9'}}
+- name: ruby-20
+  run_list:
+  - recipe[ruby]
+  attributes: {ruby: {version: '2.0'}}
+  excludes:
+  - ubuntu-12.04
